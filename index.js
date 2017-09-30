@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const keys = require('./config/keys');
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 mongoose.connect(keys.mongoURI, {
@@ -27,6 +28,7 @@ app.use(passport.session());
 // Routes
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 // config for routing on heroku
 if (process.env.NODE_ENV === 'production') {
@@ -37,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-  })
+  });
 }
 
 const PORT = process.env.PORT || 5000;
